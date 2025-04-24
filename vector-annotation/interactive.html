@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Map Loader</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #111;
+    }
+
+    #svgContainer {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      display: block;
+      user-select: none;
+      touch-action: none;
+    }
+
+    svg:active {
+      cursor: grabbing;
+    }
+
+    .highlighted {
+      stroke: yellow;
+      stroke-width: 4;
+      fill-opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div id="svgContainer"></div>
+
+  <script>
+    let viewBox = { x: 0, y: 0, w: 1000, h: 500 };
+    let isPanning = false;
+    let start = { x: 0, y: 0 };
+    let svg, overlay;
+
+    const updateViewBox = () => {
+      svg.setAttribute("viewBox", `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`);
+    };
+
+    const getSVGCoords = (e) => {
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+      return { x: svgP.x, y: svgP.y };
+    };
+
+    const addMarker = (x, y) => {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", x);
+      circle.setAttribute("cy", y);
+      circle.setAttribute("r", 20);
+      circle.setAttribute("fill", "red");
+      overlay.appendChild(circle);
+    };
+
+    const highlightById = (id) => {
+      const el = svg.querySelector(`#${id}`);
+      if (el) {
+        el.classList.add("highlighted");
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        alert(`Element with ID "${id}" not found`);
+      }
+    };
+
+    const loadSVG = async (url) => {
+      const container = document.getElementById('svgContainer');
+      const response = await fetch(url);
+      const svgText = await response.text();
+
+      container.innerHTML = '';
+
+      const parser = new DOMParser();
+      svg = parser.parseFromString(svgText, "image/svg+xml").documentElement;
+
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+      // Set default viewBox or extract from SVG
+      const vb = svg.getAttribute("viewBox");
+      if (vb) {
+        const [x, y, w, h] = vb.split(" ").map(parseFloat);
+        viewBox = { x, y, w, h };
+      }
+
+      overlay = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      overlay.setAttribute("id", "overlayLayer");
+      svg.appendChild(overlay);
+
+      container.appendChild(svg);
+      updateViewBox();
+
+      setupInteractivity();
+    };
+
+    const setupInteractivity = () => {
+      // Zoom
+      svg.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const zoomFactor = 1.1;
+        const { x, y } = getSVGCoords(e);
+        const zoom = e.deltaY < 0 ? 1 / zoomFactor : zoomFactor;
+
+        viewBox.w *= zoom;
+        viewBox.h *= zoom;
+        viewBox.x = x - (x - viewBox.x) * zoom;
+        viewBox.y = y - (y - viewBox.y) * zoom;
+        updateViewBox();
+      });
+
+      // Pan
+      svg.addEventListener("mousedown", (e) => {
+        isPanning = true;
+        start = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isPanning) return;
+        const dx = (e.clientX - start.x) * (viewBox.w / svg.clientWidth);
+        const dy = (e.clientY - start.y) * (viewBox.h / svg.clientHeight);
+        viewBox.x -= dx;
+        viewBox.y -= dy;
+        start = { x: e.clientX, y: e.clientY };
+        updateViewBox();
+      });
+
+      window.addEventListener("mouseup", () => isPanning = false);
+
+      // Right-click to add marker
+      svg.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        const { x, y } = getSVGCoords(e);
+        addMarker(x, y);
+      });
+
+      // For demo: highlight by ID after 2 seconds
+      setTimeout(() => {
+        highlightById("demo-region");
+      }, 2000);
+    };
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadSVG("map.svg");
+    });
+  </script>
+</body>
+</html>

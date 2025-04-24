@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fade Before Navigate</title>
+
+
+  <style>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+/* Now .map-wrapper is fixed ratio and acts like a relative container */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  aspect-ratio: 1920 / 880;
+  overflow: hidden; /* important */
+}
+
+/* MAKE the image absolutely positioned */
+.map-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fit exactly into .map-wrapper */
+}
+
+/* crosshair is absolutely positioned relative to .map-wrapper */
+.crosshair {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  transform: translate(-50%, -50%); /* center the whole box */
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  background-color: red;
+}
+
+.crosshair::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.crosshair::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+/* locations: perfect placement now */
+.crosshair.location-1 {
+  top: 48.3%;
+  left: 31.3%;
+}
+
+.crosshair.location-2 {
+  top: 43.8%;
+  left: 74.3%;
+}
+
+/* your rotating circle (unchanged) */
+.rotating-circle {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  transform: translate(-50%, -50%);
+  border: 5px solid transparent;
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+  border-left: 1px solid red;
+  border-right: 1px solid red;
+  border-radius: 50%;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="map-wrapper">
+      <img src="images/map.jpg" class="map-img" />
+      <div class="crosshair location-1"></div>
+      <div class="crosshair location-2"></div>
+    </div>
+  </div>
+
+
+</body>
+</html>

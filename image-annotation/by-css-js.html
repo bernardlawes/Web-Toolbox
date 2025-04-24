@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <title>Pixel-Perfect Crosshairs</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .map-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1920px;
+      aspect-ratio: 1920 / 880;
+      overflow: hidden;
+    }
+
+    .map-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /*object-fit: cover;*/
+      object-fit: contain; /* 👈 important for SVG */
+      display: block;
+    }
+
+    .crosshair {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .crosshair::before,
+    .crosshair::after {
+      content: '';
+      position: absolute;
+      background-color: red;
+    }
+
+    .crosshair::before {
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .crosshair::after {
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="map-wrapper" id="map">
+      <img src="map.svg" alt="Map" id="map-image" class="map-img" />
+      <div class="crosshair" id="marker1"></div>
+      <div class="crosshair" id="marker2"></div>
+    </div>
+  </div>
+
+  <script>
+    const updateMarkers = () => {
+      const map = document.getElementById('map');
+      const rect = map.getBoundingClientRect();
+  
+      const marker1 = document.getElementById('marker1');
+      const marker2 = document.getElementById('marker2');
+  
+      const coords = [
+        { el: marker1, x: 0.243, y: 0.473 },
+        { el: marker2, x: 0.850, y: 0.410 }
+      ];
+  
+      coords.forEach(({ el, x, y }) => {
+        el.style.left = `${x * rect.width}px`;
+        el.style.top = `${y * rect.height}px`;
+      });
+    };
+  
+    const initialize = () => {
+      const img = document.getElementById('map-image');
+      const wrapper = document.getElementById('map');
+  
+      const cssRect = wrapper.getBoundingClientRect();
+      const cssAspectRatio = cssRect.width / cssRect.height;
+
+      
+      const setAspectRatio = () => {
+        const ratio = img.naturalWidth / img.naturalHeight;
+        if(ratio != cssAspectRatio) {
+          console.log('Aspect Ratio mismatch!\n\nCSS: '+ cssAspectRatio.toFixed(2) +' = '+cssRect.width+' / '+cssRect.height+'\nIMG: ' + ratio.toFixed(2) + ' = ' + img.naturalWidth + ' / ' + img.naturalHeight);
+        }
+        wrapper.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+        updateMarkers(); // once size is known
+      };
+  
+      if (img.complete) {
+        // Image already loaded (from cache), go ahead
+        setAspectRatio();
+      } else {
+        img.onload = setAspectRatio;
+      }
+    };
+  
+    window.addEventListener('DOMContentLoaded', initialize);
+    window.addEventListener('resize', updateMarkers);
+  </script>
+
+</body>
+</html>

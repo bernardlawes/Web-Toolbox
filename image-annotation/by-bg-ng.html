@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fade Before Navigate</title>
+
+
+  <style>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
+  background: url('images/map.jpg') no-repeat center center;
+  background-size:cover;
+}
+
+
+.rotating-circle {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+
+  transform: translate(-50%, -50%);
+  border: 5px solid transparent;
+  border-top: 1px solid red; /* only one colored edge */
+  border-bottom: 1px solid red; /* only one colored edge */
+  border-left: 1px solid red; /* only one colored edge */
+  border-right: 1px solid red; /* only one colored edge */
+  border-radius: 50%;
+  animation: rotate 2s linear infinite;
+}
+
+.crosshair {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+
+  transform: translate(-50%, -50%);
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  background-color: red;
+}
+
+.crosshair::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.crosshair::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+
+
+
+.loocation-1 {
+  top: 48%;
+  left: 26%;
+}
+
+.location-2 {
+  top: 44%;
+  left: 81%;
+}
+
+
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+  </style>
+</head>
+<body style="background-color: red;">
+
+  <div class="container">
+    <div class="rotating-circle crosshair location-1"></div>
+    <div class="rotating-circle crosshair location-2"></div>
+  </div>
+
+
+</body>
+</html>

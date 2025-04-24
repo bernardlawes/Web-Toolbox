@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fade Before Navigate</title>
+
+
+  <style>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.bg-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black; /* optional, for contrast */
+
+}
+
+.bg-image {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;           /* optional: limit to native image width */
+  aspect-ratio: 1920 / 880;    /* critical for maintaining image scale */
+  background: url('images/map.jpg') no-repeat center center;
+  background-size: contain;    /* use 'contain' to preserve full image */
+}
+
+.bg-image::before {
+  content: ' ';
+  position: absolute;
+  inset: 0;
+  border: 2px dashed yellow;
+}
+
+.rotating-circle {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+
+  transform: translate(-50%, -50%);
+  border: 5px solid transparent;
+  border-top: 1px solid red; /* only one colored edge */
+  border-bottom: 1px solid red; /* only one colored edge */
+  border-left: 1px solid red; /* only one colored edge */
+  border-right: 1px solid red; /* only one colored edge */
+  border-radius: 50%;
+  animation: rotate 2s linear infinite;
+}
+
+
+
+.crosshair {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  background-color: red;
+}
+
+.crosshair::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.crosshair::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+
+
+
+.location-1 {
+  top: 46.5%;
+  left: 30.5%;
+}
+
+.location-2 {
+  top: 42.5%;
+  left: 73.5%;
+}
+
+
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+  </style>
+</head>
+<body >
+
+  <div class="bg-container">
+    <div class="bg-image">
+      <div class="crosshair location-1"></div>
+      <div class="crosshair location-2"></div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG with <defs> Example</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      height: 100%;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg {
+      width: 90%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- SVG will be directly embedded -->
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <rect width="1000" height="500" fill="black" />
+  
+  <defs>
+    <!-- Reusable red crosshair -->
+    <g id="crosshair">
+      <line x1="-10" y1="0" x2="10" y2="0" stroke="red" stroke-width="2"/>
+      <line x1="0" y1="-10" x2="0" y2="10" stroke="red" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <!-- Use the same crosshair at different coordinates -->
+  <use href="#crosshair" x="200" y="150" />
+  <use href="#crosshair" x="800" y="350" />
+</svg>
+  </div>
+</body>
+</html>
