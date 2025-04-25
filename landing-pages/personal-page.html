@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Doe | Solutions Architect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    .gradient-text {
+      background: linear-gradient(to right, #3b82f6, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- Hero -->
+<section class="bg-gray-900 text-white py-24 px-6 text-center">
+  <div class="max-w-4xl mx-auto" data-aos="fade-up">
+    <h1 class="text-5xl font-bold mb-4">John Doe</h1>
+    <p class="text-xl text-gray-300 mb-6">Solutions Architect | Computer Vision | Machine Learning | IoT</p>
+    <div class="space-x-4">
+      <a href="#projects" class="bg-blue-600 hover:bg-blue-500 py-3 px-6 rounded-full transition">See My Work</a>
+      <a href="resume.pdf" download class="bg-gray-100 text-gray-900 hover:bg-gray-300 py-3 px-6 rounded-full transition">Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="py-16 px-6 bg-white" id="about">
+  <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+    <h2 class="text-3xl font-semibold mb-4 gradient-text">About Me</h2>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+    </p>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="py-20 px-6 bg-gray-100" id="projects">
+  <div class="max-w-6xl mx-auto" data-aos="fade-up">
+    <h2 class="text-3xl font-semibold text-center mb-10 gradient-text">Featured Projects</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Project Card -->
+      <div class="bg-white shadow rounded-lg p-6" data-aos="fade-up">
+        <h3 class="text-xl font-bold mb-2">Smart Factory AI</h3>
+        <p class="text-gray-700 mb-4">
+          Designed and deployed a computer vision pipeline for real-time defect detection on edge devices across multiple factories.
+        </p>
+        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Edge AI</span>
+      </div>
+      <!-- Project Card -->
+      <div class="bg-white shadow rounded-lg p-6" data-aos="fade-up" data-aos-delay="100">
+        <h3 class="text-xl font-bold mb-2">Healthcare Annotation Tool</h3>
+        <p class="text-gray-700 mb-4">
+          Built a HIPAA-compliant platform to annotate and classify medical images for ML training and diagnostic prediction.
+        </p>
+        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">Medical AI</span>
+      </div>
+      <!-- Project Card -->
+      <div class="bg-white shadow rounded-lg p-6" data-aos="fade-up" data-aos-delay="200">
+        <h3 class="text-xl font-bold mb-2">Supply Chain Dashboard</h3>
+        <p class="text-gray-700 mb-4">
+          Led the design of a live tracking dashboard for logistics partners, integrating IoT signals and ML forecasting models.
+        </p>
+        <span class="text-sm bg-purple-100 text-purple-700 px-3 py-1 rounded-full">IoT / ML</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="py-20 px-6 bg-white">
+  <div class="max-w-3xl mx-auto text-center" data-aos="zoom-in">
+    <h2 class="text-2xl font-semibold mb-6 gradient-text">What People Say</h2>
+    <blockquote class="italic text-xl text-gray-700 leading-relaxed">
+      “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ”
+    </blockquote>
+    <p class="mt-4 font-medium text-gray-600">– VP of Sales, AI Startup</p>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="py-20 px-6 bg-gray-900 text-white" id="contact">
+  <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+    <h2 class="text-3xl font-semibold mb-6">Let’s Connect</h2>
+    <p class="text-lg text-gray-300 mb-6">
+      Whether you're planning a project, exploring a partnership, or just want to talk tech—I’d love to hear from you.
+    </p>
+    <p class="text-xl font-medium mb-2">
+      <a href="mailto:your.email@example.com" class="hover:underline">your.email@example.com</a>
+    </p>
+    <p>
+      <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" class="text-blue-400 hover:underline">LinkedIn Profile</a>
+    </p>
+  </div>
+</section>
+
+<footer class="bg-gray-800 text-gray-400 text-center py-4">
+  &copy; 2025 Jon Doe. All rights reserved.
+</footer>
+
+<!-- AOS Animation Script -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+  });
+</script>
+
+</body>
+</html>
