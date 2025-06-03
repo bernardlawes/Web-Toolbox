@@ -20,7 +20,7 @@ This repository provides a simple and secure pattern for triggering file downloa
 2. Link `download.js` to your HTML and bind it to your download button.
 3. Trigger the download programmatically:
 
-## 🚀 For eductional purposes only, 
+## 🚀 For illustrative purposes only, 
 
 1.  The secure version uses a hardcoded token. In an actual use cases, it would have been generated dynamically
 2.  The secure version does not validate or map the token to a specific file as required in an actual use case
