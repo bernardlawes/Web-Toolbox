@@ -1,19 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Test Download</title>
-</head>
-<body>
-  <button id="downloadBtn"
-    data-token="12345678901"
-  >
-    Download PDF
-  </button>
-
-
-
-  <script>
-
     const token = this.dataset.token;
 
     const url = `download.php?token=${encodeURIComponent(token)}&target=${encodeURIComponent(target)}`;
@@ -36,6 +20,3 @@
         });
         
     });
-  </script>
-</body>
-</html>
